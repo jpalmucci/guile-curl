@@ -445,8 +445,9 @@ cache, the cookies or the shared."
     (connect-only ,CURLOPT_CONNECT_ONLY boolean)
     (use-ssl ,CURLOPT_USE_SSL integer)
     (resolve ,CURLOPT_RESOLVE slist)
-    (dns-servers ,CURLOPT_DNS_SERVERS string)
-    (accepttimeout-ms ,CURLOPT_ACCEPTTIMEOUT_MS integer)
+    ;; Not supported in curl < 7.24 (Ubuntu 12.04 uses 7.22)
+    ;;    (dns-servers ,CURLOPT_DNS_SERVERS string)
+    ;;    (accepttimeout-ms ,CURLOPT_ACCEPTTIMEOUT_MS integer)
 
     ;; SSL and SECURITY OPTIONS
     (sslcert ,CURLOPT_SSLCERT string)
