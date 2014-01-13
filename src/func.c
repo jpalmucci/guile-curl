@@ -142,12 +142,14 @@ cl_easy_setopt (SCM handle, SCM option, SCM param, SCM big)
 	    curl_slist_free_all (c_handle->prequote);
 	  c_handle->prequote = sl;
 	}
+#if LIBCURL_VERSION_NUM >= 0x071503
       else if (c_option == CURLOPT_RESOLVE)
 	{
 	  if (c_handle->resolve)
 	    curl_slist_free_all (c_handle->resolve);
 	  c_handle->resolve = sl;
 	}
+#endif
       else if (c_option == CURLOPT_TELNETOPTIONS)
 	{
 	  if (c_handle->telnetoptions)

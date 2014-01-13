@@ -118,7 +118,7 @@
 	    CURL_RTSPREQ_RECEIVE
 
 	    CURL_IPRESOLVE_WHATEVER
-	    CURL_IPRESOLVE_V4
+            CURL_IPRESOLVE_V4
 	    CURL_IPRESOLVE_V6
 
 	    CURLUSESSL_NONE
@@ -131,8 +131,8 @@
 	    CURL_SSLVERSION_SSLv2
 	    CURL_SSLVERSION_SSLv3
 
-	    CURLGSSAPI_DELEGATION_FLAG
-	    CURLGSSAPI_DELEGATION_POLICY_FLAG
+	    ;; CURLGSSAPI_DELEGATION_FLAG
+	    ;; CURLGSSAPI_DELEGATION_POLICY_FLAG
 
 	    CURLSSH_AUTH_PUBLICKEY
 	    CURLSSH_AUTH_PASSWORD
@@ -340,15 +340,19 @@ cache, the cookies or the shared."
     (proxyusername ,CURLOPT_PROXYUSERNAME string)
     (proxypassword ,CURLOPT_PROXYPASSWORD string)
     (httpauth ,CURLOPT_HTTPAUTH integer)
-    (tlsauth-type ,CURLOPT_TLSAUTH_TYPE integer)
-    (tlsauth-username ,CURLOPT_TLSAUTH_USERNAME string)
-    (tlsauth-password ,CURLOPT_TLSAUTH_PASSWORD string)
+    ,@(if (defined? 'CURLOPT_TLSAUTH_TYPE)
+         `((tlsauth-type ,CURLOPT_TLSAUTH_TYPE integer)
+           (tlsauth-username ,CURLOPT_TLSAUTH_USERNAME string)
+           (tlsauth-password ,CURLOPT_TLSAUTH_PASSWORD string))
+         '())
     (proxyauth ,CURLOPT_PROXYAUTH integer)
 
     ;; HTTP OPTIONS
     (autoreferer ,CURLOPT_AUTOREFERER boolean)
-    (accept-encoding ,CURLOPT_ACCEPT_ENCODING string)
-    (transfer-encoding ,CURLOPT_TRANSFER_ENCODING string)
+    ,@(if (defined? 'CURLOPT_ACCEPT_ENCODING)
+          `((accept-encoding ,CURLOPT_ACCEPT_ENCODING string)
+            (transfer-encoding ,CURLOPT_TRANSFER_ENCODING string))
+          '())
     (followlocation ,CURLOPT_FOLLOWLOCATION boolean)
     (unrestricted-auth ,CURLOPT_UNRESTRICTED_AUTH boolean)
     (maxredirs ,CURLOPT_MAXREDIRS integer)
@@ -444,7 +448,9 @@ cache, the cookies or the shared."
     (ipresolve ,CURLOPT_IPRESOLVE integer)
     (connect-only ,CURLOPT_CONNECT_ONLY boolean)
     (use-ssl ,CURLOPT_USE_SSL integer)
-    (resolve ,CURLOPT_RESOLVE slist)
+    ,@(if (defined? 'CURLOPT_RESOLVE)
+          `((resolve ,CURLOPT_RESOLVE slist))
+          '())
     ;; Not supported in curl < 7.24 (Ubuntu 12.04 uses 7.22)
     ,@(if (defined? 'CURLOPT_DNS_SERVERS)
           `((dns-servers ,CURLOPT_DNS_SERVERS string))
@@ -475,7 +481,9 @@ cache, the cookies or the shared."
     (ssl-cipher-list ,CURLOPT_SSL_CIPHER_LIST string)
     (ssl-sessionid-cache ,CURLOPT_SSL_SESSIONID_CACHE boolean)
     (krblevel ,CURLOPT_KRBLEVEL string)
-    (gssapi-delegation ,CURLOPT_GSSAPI_DELEGATION integer)
+    ,@(if (defined? 'CURLOPT_GSSAPI_DELEGATION)
+          `((gssapi-delegation ,CURLOPT_GSSAPI_DELEGATION integer))
+          '())
     (ssh-auth-types ,CURLOPT_SSH_AUTH_TYPES integer)
     (ssh-host-public-key-md5 ,CURLOPT_SSH_HOST_PUBLIC_KEY_MD5 string)
     (ssh-public-keyfile ,CURLOPT_SSH_PUBLIC_KEYFILE string)
