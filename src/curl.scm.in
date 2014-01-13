@@ -446,8 +446,13 @@ cache, the cookies or the shared."
     (use-ssl ,CURLOPT_USE_SSL integer)
     (resolve ,CURLOPT_RESOLVE slist)
     ;; Not supported in curl < 7.24 (Ubuntu 12.04 uses 7.22)
-    ;;    (dns-servers ,CURLOPT_DNS_SERVERS string)
-    ;;    (accepttimeout-ms ,CURLOPT_ACCEPTTIMEOUT_MS integer)
+    ,@(if (defined? 'CURLOPT_DNS_SERVERS)
+          `((dns-servers ,CURLOPT_DNS_SERVERS string))
+          '())
+    ;; Not supported in curl < 7.24 (Ubuntu 12.04 uses 7.22)
+    ,@(if (defined? 'CURLOPT_ACCEPTTIMEOUT_MS)
+          `((accepttimeout-ms ,CURLOPT_ACCEPTTIMEOUT_MS integer))
+          '())
 
     ;; SSL and SECURITY OPTIONS
     (sslcert ,CURLOPT_SSLCERT string)
